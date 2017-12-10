@@ -24,7 +24,10 @@ class RepoSeries extends CollectionBasedRepo<Serie> {
 		typeof(Serie)
 	}
 	
-	def serieConNombrre(String nombre) {
+	def getSeries(){
+		allInstances
+	}
+	def serieConNombre(String nombre) {
 		allInstances.findFirst[c | c.getNombreSerie == nombre]
 	}
 	

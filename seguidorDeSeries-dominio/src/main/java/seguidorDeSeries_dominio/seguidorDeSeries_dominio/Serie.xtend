@@ -24,5 +24,9 @@ class Serie extends Entity {
 		this.estado
 	}
 	
+	def cambiarEstado(EstadoSerie newEstado) {
+		estado = newEstado
+	}
+	
 	//para que funcione bien el repo
 }
