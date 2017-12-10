@@ -18,5 +18,11 @@ class Serie extends Entity {
 		this.estado = estado
 	}
 
-	new(){} //para que funcione bien el repo
+	new(){}
+	
+	def getEstado() {
+		this.estado
+	}
+	
+	//para que funcione bien el repo
 }
