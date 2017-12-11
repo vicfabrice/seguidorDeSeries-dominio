@@ -15,6 +15,8 @@ import org.uqbar.arena.widgets.tables.Column
 import org.seguidorDeSeries.dominio.EstadoSerie
 import org.uqbar.arena.widgets.Button
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import org.uqbar.arena.widgets.TextBox
+import java.awt.Color
 
 class SeguidorDeSeriesWindow extends SimpleWindow<SeguidorDeSeriesAppModel>{
 	
@@ -38,20 +40,30 @@ override protected createFormPanel(Panel mainPanel) {
 		]
 		
 		title = "Seguidor de Series ;)"
+		
+		val panelHor = new Panel(mainPanel) => [
+			layout = new VerticalLayout
+		]
+		
+		new TextBox(panel) => [
+			width = 80
+      		value <=> "serieABuscar"
+		]
 
 		val searchMainPanel = new Panel(mainPanel) => [
 			layout = new HorizontalLayout
 		]
 
-		val buttonPanel1 = new Panel(searchMainPanel) => [
+		val buttonPanel1 = new Panel(mainPanel) => [
 			layout = new ColumnLayout(1)
 		]
 
 		//this.crearBotones1(buttonPanel1)
 
 		this.crearTablaDeSeries(panel)
-		//this.crearDetallesDeSerieSeleccionada(mainPanel)
-		this.createResultsGrid(mainPanel)
+		this.createGridActions(panel)
+		this.crearDetallesDeSerieSeleccionada(searchMainPanel)
+		//this.createResultsGrid(mainPanel)
 		
 }
 
@@ -84,32 +96,50 @@ override protected createFormPanel(Panel mainPanel) {
 			fixedSize = 100
 			bindContentsToProperty("estado").transformer = [EstadoSerie e|e.getName()]
 		]
-		
-		// para tag 2
-		/*new Column(table) => [
-			title = "Info peli"
-			fixedSize = 200
-			bindContentsToProperty("aclaracion")
-		]*/
 	}
 	
-
-// ** Creacion de buscador
+	// ** Creacion de buscador
 // ********************************************************
 
-	override protected addActions(Panel actionsPanel) {
-		new Button(actionsPanel) => [
+	override protected addActions(Panel panel) {
+		new Button(panel) => [
+			val hayCriterio = new NotNullObservable("serieABuscar")
+			bindEnabled(hayCriterio)
 			caption = "Buscar"
-			onClick([|modelObject.buscarSerie("")])
+			onClick[|modelObject.buscarSerie]
 			setAsDefault
 			disableOnError
 		]
 
-		new Button(actionsPanel) => [
+		new Button(panel) => [
 			caption = "Limpiar"
 			onClick([|modelObject.clear])
 		]
 	}
+		// ** Detalle de serie seleccionada
+		// ********************************************************
+		def crearDetallesDeSerieSeleccionada(Panel panel){
+			
+			val panelDetalle = new Panel(panel) => [
+			layout = new VerticalLayout
+			]
+			new Label(panelDetalle) => [
+    			background = Color.ORANGE
+    			value <=> "serieSeleccionada.nombreSerie"
+			]
+			
+			new Label(panelDetalle) => [
+    			background = Color.ORANGE
+    			value <=> "serieSeleccionada.cantTemporadas"
+			]
+			
+			new Label(panelDetalle) => [
+    			background = Color.ORANGE
+    			value <=> "serieSeleccionada.estadoStr"
+			]
+		}
+		
+
 	
 	// Resultados de la búsqueda
 	
@@ -144,26 +174,26 @@ override protected createFormPanel(Panel mainPanel) {
 
 	}
 
-	def void createGridActions(Panel mainPanel) {
+	def void createGridActions(Panel panel) {
 		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		val elementoSeleccionado = new NotNullObservable("serieSeleccionada")
 		
-		val actionsPanel = new Panel(mainPanel).layout = new HorizontalLayout
+		val actionsPanel = new Panel(panel).layout = new HorizontalLayout
 		
-		new Button(actionsPanel) => [
+		new Button(panel) => [
 			caption = "Pendiente"
 			onClick([|modelObject.cambiarEstadoDeSerieSeleccionada(EstadoSerie.PENDIENTE)])
 			bindEnabled(elementoSeleccionado)
 		]
 		
-		new Button(actionsPanel) => [
+		new Button(panel) => [
 			caption = "Mirando"
 			onClick([|modelObject.cambiarEstadoDeSerieSeleccionada(EstadoSerie.MIRANDO)])
 			bindEnabled(elementoSeleccionado)
 		]
 
-		new Button(actionsPanel) => [
-			caption = "Borrar"
+		new Button(panel) => [
+			caption = "Vista"
 			onClick([|modelObject.cambiarEstadoDeSerieSeleccionada(EstadoSerie.VISTA)])
 			bindEnabled(elementoSeleccionado)
 		]

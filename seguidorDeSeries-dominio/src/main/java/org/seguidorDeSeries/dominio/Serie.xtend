@@ -13,17 +13,23 @@ class Serie extends Entity {
 	String nombreSerie
 	Integer cantTemporadas
 	EstadoSerie estado
+	String estadoStr
 	
 	new(String nombreSerie, Integer cantTemporadas, EstadoSerie estado){
 		this.nombreSerie = nombreSerie
 		this.cantTemporadas = cantTemporadas
 		this.estado = estado
+		this.estadoStr = estado.getName()
 	}
 
 	new(){}
 	
 	def getEstado() {
 		this.estado
+	}
+	
+	def getEstadoStr(){
+		this.estado.getName()
 	}
 	
 	def cambiarEstado(EstadoSerie newEstado) {

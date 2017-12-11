@@ -20,7 +20,7 @@ class SeguidorDeSeriesAppModel extends ApplicationContext implements Serializabl
 	Serie serieSeleccionada
 	List<Serie> series
 	List<Serie> resultadoBusqueda
-	SerieModel serie
+	String serieABuscar
 	
 	new(){
 		seguidor = new SeguidorDeSeries()
@@ -31,10 +31,13 @@ class SeguidorDeSeriesAppModel extends ApplicationContext implements Serializabl
 		repoSeries = ApplicationContext.instance.getSingleton(typeof(Serie))
 	}
 	
-	def void buscarSerie(String nombreSerie){ 
-		resultadoBusqueda = new ArrayList 
-		resultadoBusqueda.add(repoSeries.serieConNombre("nombreSerie"))
-		serieSeleccionada = repoSeries.serieConNombre("nombreSerie")
+	def void buscarSerie(){ 
+		
+		if (repoSeries.serieConNombre(serieABuscar) != null){
+			serieSeleccionada = repoSeries.serieConNombre(serieABuscar)
+			resultadoBusqueda = new ArrayList 
+			resultadoBusqueda.add(repoSeries.serieConNombre(serieABuscar))
+		} 
 		
 	}
 	
