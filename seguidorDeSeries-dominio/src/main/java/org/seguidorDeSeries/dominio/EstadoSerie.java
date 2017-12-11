@@ -1,4 +1,4 @@
-package seguidorDeSeries_dominio.seguidorDeSeries_dominio;
+package org.seguidorDeSeries.dominio;
 
 //Uso un Enum de Java porque el de Xtend no funciona 
 //https://bugs.eclipse.org/bugs/show_bug.cgi?id=403783

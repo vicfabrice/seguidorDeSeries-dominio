@@ -1,10 +1,10 @@
-package seguidorDeSeries_dominio.seguidorDeSeries_dominio
+package org.seguidorDeSeries.dominio
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.Observable
-import java.util.List
 import org.seguidorDeSeries.repo.RepoSeries
 import org.uqbar.commons.applicationContext.ApplicationContext
+import java.util.List
 
 @Observable
 @Accessors
@@ -23,7 +23,9 @@ class SeguidorDeSeries {
 	def getSeries(){
 		repoSeries.allInstances
 	}
+
 	protected def RepoSeries getRepoSeries() {
 		ApplicationContext.instance.getSingleton(typeof(Serie)) as RepoSeries
 	}
+	
 }

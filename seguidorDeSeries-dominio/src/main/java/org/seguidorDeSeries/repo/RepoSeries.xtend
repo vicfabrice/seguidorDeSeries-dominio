@@ -1,9 +1,10 @@
 package org.seguidorDeSeries.repo
 
 import org.uqbar.commons.model.CollectionBasedRepo
-import seguidorDeSeries_dominio.seguidorDeSeries_dominio.Serie
-import seguidorDeSeries_dominio.seguidorDeSeries_dominio.EstadoSerie
+
 import org.uqbar.commons.model.annotations.TransactionalAndObservable
+import org.seguidorDeSeries.dominio.Serie
+import org.seguidorDeSeries.dominio.EstadoSerie
 
 @TransactionalAndObservable
 class RepoSeries extends CollectionBasedRepo<Serie> {
@@ -28,7 +29,7 @@ class RepoSeries extends CollectionBasedRepo<Serie> {
 		allInstances
 	}
 	def serieConNombre(String nombre) {
-		allInstances.findFirst[c | c.getNombreSerie == nombre]
+		allInstances.findFirst[c | c.getnombreSerie() == nombre]
 	}
 	
 	

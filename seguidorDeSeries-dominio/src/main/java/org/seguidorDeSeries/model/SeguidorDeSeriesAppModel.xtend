@@ -1,24 +1,26 @@
 package org.seguidorDeSeries.model
 
 import org.uqbar.commons.applicationContext.ApplicationContext
-import seguidorDeSeries_dominio.seguidorDeSeries_dominio.SeguidorDeSeries
-import org.seguidorDeSeries.repo.RepoSeries
-import seguidorDeSeries_dominio.seguidorDeSeries_dominio.Serie
-import org.uqbar.commons.model.annotations.TransactionalAndObservable
+import org.seguidorDeSeries.dominio.SeguidorDeSeries
+import org.seguidorDeSeries.dominio.EstadoSerie
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.uqbar.commons.model.utils.ObservableUtils
+import org.uqbar.commons.model.annotations.TransactionalAndObservable
+import org.seguidorDeSeries.repo.RepoSeries
+import org.seguidorDeSeries.dominio.Serie
 import java.util.List
+import org.uqbar.commons.model.utils.ObservableUtils
+import java.util.ArrayList
 import java.io.Serializable
-import seguidorDeSeries_dominio.seguidorDeSeries_dominio.EstadoSerie
 
 @Accessors
 @TransactionalAndObservable
-class SeguidorDeSeriesAppicationModel extends ApplicationContext implements Serializable{
-	
+class SeguidorDeSeriesAppModel extends ApplicationContext implements Serializable{
 	SeguidorDeSeries seguidor
 	RepoSeries repoSeries
 	Serie serieSeleccionada
 	List<Serie> series
+	List<Serie> resultadoBusqueda
+	SerieModel serie
 	
 	new(){
 		seguidor = new SeguidorDeSeries()
@@ -29,7 +31,9 @@ class SeguidorDeSeriesAppicationModel extends ApplicationContext implements Seri
 		repoSeries = ApplicationContext.instance.getSingleton(typeof(Serie))
 	}
 	
-	def Serie buscarSerie(String nombreSerie){
+	def void buscarSerie(String nombreSerie){ 
+		resultadoBusqueda = new ArrayList 
+		resultadoBusqueda.add(repoSeries.serieConNombre("nombreSerie"))
 		serieSeleccionada = repoSeries.serieConNombre("nombreSerie")
 		
 	}
@@ -53,9 +57,9 @@ class SeguidorDeSeriesAppicationModel extends ApplicationContext implements Seri
 	 }
 	 
 	 def actualizar() {
+
 	 	var repoSeries = ApplicationContext.instance.getSingleton(typeof(Serie)) as RepoSeries
 	 	series = repoSeries.getSeries()
-	 	ObservableUtils.firePropertyChanged(this, "estado",this.serieSeleccionada.getEstado())
+	 	ObservableUtils.firePropertyChanged(this, "series",this.series)
 	 	 }
-	 	 
 }

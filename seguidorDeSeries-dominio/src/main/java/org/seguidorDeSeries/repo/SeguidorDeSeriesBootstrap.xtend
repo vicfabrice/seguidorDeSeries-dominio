@@ -1,9 +1,9 @@
 package org.seguidorDeSeries.repo
 
 import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
-import seguidorDeSeries_dominio.seguidorDeSeries_dominio.Serie
 import org.uqbar.commons.applicationContext.ApplicationContext
-import seguidorDeSeries_dominio.seguidorDeSeries_dominio.EstadoSerie
+import org.seguidorDeSeries.dominio.EstadoSerie
+import org.seguidorDeSeries.dominio.Serie
 
 class SeguidorDeSeriesBootstrap extends CollectionBasedBootstrap {
 	
